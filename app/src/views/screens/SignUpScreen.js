@@ -21,55 +21,25 @@ let options2 = {
   },
 };
 const SignUpScreen = ({navigation}) => {
-  let options = {
-    title: 'Select Image',
-    customButtons: [
-      {name: 'customOptionKey', title: 'Choose Photo from Custom Option'},
-    ],
-    storageOptions: {
-      skipBackup: true,
-      path: 'images',
-    },
-  };
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [name, setName] = useState();
-  function insertData(nonce) {
-    axios
-      .get(
-        'http://localhost/wordpress/wordpress/api/user/register/?username=' +
-          name +
-          '&email=' +
-          email +
-          '&nonce=' +
-          nonce +
-          '&display_name=' +
-          name +
-          '&notify=both&user_pass=' +
-          password,
-      )
-      .then(res => {
-        console.log(res, 'User inserted');
-      })
-      .catch(error => {
-        console.log(error.response);
-      });
-  }
-  function getWPnonce() {
-    axios
-      .get(
-        'http://localhost/wordpress/wordpress/api/get_nonce/?controller=user&method=register',
-      )
-      .then(res => {
-        insertData(res.data.nonce);
-        console.log(res.data);
-      })
-      .catch(error => {
-        console.log(error.response);
-      });
-  }
   const handleSignUp = () => {
-    getWPnonce();
+    axios
+      .post(
+        'http://192.168.10.2:80/wordpress/?rest_route=/simple-jwt-login/v1/users&email=' +
+          email +
+          '&password=' +
+          password +
+          '&display_name=' +
+          name,
+      )
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
   const handlepic = () => {
     launchImageLibrary(options2, response => {

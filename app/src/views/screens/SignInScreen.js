@@ -4,7 +4,6 @@ import {
   View,
   Text,
   TextInput,
-  Image,
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
@@ -12,6 +11,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../../consts/color';
 import STYLES from '../../styles';
 import axios from 'axios';
+import {event} from 'react-native-reanimated';
 
 const SignInScreen = ({navigation}) => {
   const [email, setEmail] = useState();
@@ -24,11 +24,11 @@ const SignInScreen = ({navigation}) => {
     };
     axios
       .post(
-        'http://localhost/wordpress/wordpress/wp-json/jwt-auth/v1/token',
+        'http://192.168.10.2/wordpress/wp-json/jwt-auth/v1/token',
         loginData,
       )
       .then(res => {
-        console.log(res.data);
+        console.log(res);
       })
       .catch(err => {
         console.log(err);
